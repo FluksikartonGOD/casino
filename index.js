@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const server = require('http').createServer(app);  
+const http = require('http');
+const server = http.createServer(app);  
 const io = require('socket.io')(server);
 const port = process.env.PORT || 80;
 
@@ -11,13 +12,65 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+const BETTINGTIME = 5000;
+const SPINTIME = 10000;
+const COLLECTIONTIME = 5000;
+
+
+const rouleteState = {
+    state: null,
+    result: null,
+    time: null,
+};
+
+const initGame = () => {
+    rouleteState.state = 'betting';
+    changeState('betting');
+};
+const changeState = (state) => {
+    if (rouleteState.state === 'betting') {
+        rouleteState.result = null;
+        rouleteState.time = new Date();
+        io.emit('game', rouleteState);
+        setTimeout(() => {
+            rouleteState.state = 'spinning';
+            rouleteState.time = new Date();
+            io.emit('game', rouleteState);
+            changeState('spinning');
+        }, BETTINGTIME);
+    }
+    if (rouleteState.state === 'spinning') {
+        setTimeout(() => {
+            rouleteState.time = new Date();
+            rouleteState.result = Math.floor(Math.random() * 37);
+            io.emit('game', rouleteState);
+            rouleteState.state = 'collection';
+            changeState('collection');
+        }, SPINTIME);
+    }
+    if (rouleteState.state === 'collection') {
+        rouleteState.time = new Date();
+        io.emit('game', rouleteState);
+        setTimeout(() => {
+            rouleteState.state = 'betting';
+            changeState('betting');
+        }, COLLECTIONTIME);
+    }
+};
+
+initGame();
+
+// setInterval(function(){
+//     rouleteState.time = new Date();
+//     io.emit('game', rouleteState);
+// }, 1000);
+
 io.on('connection', socket => {
-    console.log('User connected')
-    setInterval(function(){
-        socket.emit('game', 1);
-    }, 1000);
+    console.log('User connected');
+    rouleteState.time = new Date();
+    io.emit('game', rouleteState);
     socket.on('disconnect', () => {
-        console.log('user disconnected')
+        console.log('user disconnected');
     });
 });
 
