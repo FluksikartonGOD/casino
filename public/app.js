@@ -13,8 +13,6 @@ var spinTimeTotal = 0;
 
 var ctx;
 
-document.getElementById("spin").addEventListener("click", spin);
-
 function getColor(item, index) {
     if (item === 0) {
         return '#51D828'
