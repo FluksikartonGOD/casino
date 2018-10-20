@@ -42,8 +42,10 @@ const changeState = (state) => {
     if (rouleteState.state === 'spinning') {
         setTimeout(() => {
             rouleteState.time = new Date();
-            rouleteState.result = Math.floor(Math.random() * 37);
+            rouleteState.result = Math.random() * 10 + 10;
+            rouleteState.timeTotal = Math.random() * 3 + 4 * 1000;
             io.emit('game', rouleteState);
+            rouleteState.result = null;
             rouleteState.state = 'collection';
             changeState('collection');
         }, SPINTIME);
