@@ -1,0 +1,22 @@
+{
+  "name": "casino",
+  "version": "1.0.0",
+  "description": "A casino roulete Node.js application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FluksikartonGOD/casino.git"
+  },
+  "author": "Georgi Antonov",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "express": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=8.11.3",
+    "npm": ">=5.6.0"
+  }
+}
