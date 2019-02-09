@@ -1,0 +1,103 @@
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Open Sans', sans-serif!important;
+    background-image: linear-gradient(to bottom, #7cceb1, #7948dc);
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+#wheel {
+  width:500px;
+	height:500px;
+  border-radius:50%;	
+  position:relative;
+	border:8px solid #fff;
+	box-shadow:rgba(0,0,0,0.2) 0px 0px 10px, rgba(0,0,0,0.05) 0px 3px 0px;
+	transform: rotate(0deg);
+}
+#wheel:before{
+	content:'';
+	position:absolute;
+  border-radius: 50%;
+  background-color: white;
+	width:250px;
+  height:250px;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0px);
+	border-radius:50%;
+  z-index:1000;	
+}
+.pin {
+  position: absolute;
+  top: -38px;
+  height: 30px;
+  width: 20px;
+  left: 50%;
+  margin-left: -10px;
+  background-color: black;
+}
+#inner-wheel{
+	width:100%;
+  height:100%;
+  transition: all 15s cubic-bezier(0,.99,.44,.99);	
+}
+#inner-wheel div.sector {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 250px 22px 0;
+  border-color: #19c transparent;
+  transform-origin: 50% 100%;
+  left: 230px;
+  top: 0%;
+	opacity:1;
+}
+#inner-wheel div.sector-number {
+  position: absolute;
+  text-align: center;
+  width: 44px;
+  height: 50%;
+  transform-origin: 50% 100%;
+  left: 230px;
+  top: 0%;
+  z-index: 3;
+  color: white;
+}
+.game {
+    width: 800px;
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#inner-wheel div.sector:nth-child(1) {
+	transform: rotate(90deg);
+	border-color: #16a085 transparent;
+}
+#inner-wheel div.sector:nth-child(2) {
+	transform: rotate(180deg);
+	border-color: #2980b9 transparent;
+}
+#inner-wheel div.sector:nth-child(3) {
+	transform: rotate(270deg);
+	border-color: #34495e transparent;
+}
+#inner-wheel div.sector:nth-child(4) {
+	transform: rotate(360deg);
+	border-color: #f39c12 transparent;
+}
